@@ -1,6 +1,7 @@
 export interface Empresa {
   id: string;
   rut: string;
+  codigo?: string;
   razonSocial: string;
   telefono?: string;
   email?: string;

@@ -32,11 +32,12 @@ export const createEmpresa = async (req: AuthRequest, res: Response): Promise<vo
       return;
     }
 
-    const { rut, razonSocial, telefono, email } = req.body;
+    const { rut, codigo, razonSocial, telefono, email } = req.body;
 
     const newEmpresa = await prisma.empresa.create({
       data: {
         rut,
+        codigo,
         razonSocial,
         telefono,
         email,

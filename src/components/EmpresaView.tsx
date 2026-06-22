@@ -7,7 +7,7 @@ export const EmpresaView = () => {
   const { empresas, addEmpresa, removeEmpresa, trabajadores, cargas } = useAppContext();
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({ rut: '', razonSocial: '', telefono: '', email: '' });
+  const [formData, setFormData] = useState({ rut: '', codigo: '', razonSocial: '', telefono: '', email: '' });
   
   // Estados para el acordeón (Drill-down)
   const [expandedEmpresaId, setExpandedEmpresaId] = useState<string | null>(null);
@@ -40,6 +40,7 @@ export const EmpresaView = () => {
     try {
       await addEmpresa({ 
         rut: formData.rut, 
+        codigo: formData.codigo || undefined,
         razonSocial: formData.razonSocial,
         telefono: formData.telefono,
         email: formData.email
@@ -47,7 +48,7 @@ export const EmpresaView = () => {
       
       showToast('Empresa añadida al directorio.', 'success');
 
-      setFormData({ rut: '', razonSocial: '', telefono: '', email: '' });
+      setFormData({ rut: '', codigo: '', razonSocial: '', telefono: '', email: '' });
       setShowForm(false);
     } catch (error: any) {
       showToast(`Error al registrar la empresa: ${error.message || 'Desconocido'}`, 'error');
@@ -76,7 +77,7 @@ export const EmpresaView = () => {
           </div>
           
           <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
-            <div className="md:col-span-4">
+            <div className="md:col-span-3">
               <label className="form-label">RUT Empresa</label>
               <input 
                 type="text" 
@@ -87,7 +88,17 @@ export const EmpresaView = () => {
                 required
               />
             </div>
-            <div className="md:col-span-8">
+            <div className="md:col-span-3">
+              <label className="form-label">Código Empresa</label>
+              <input 
+                type="text" 
+                className="lunar-input" 
+                placeholder="Opcional"
+                value={formData.codigo}
+                onChange={e => setFormData({...formData, codigo: e.target.value})}
+              />
+            </div>
+            <div className="md:col-span-6">
               <label className="form-label">Razón Social</label>
               <input 
                 type="text" 
@@ -171,6 +182,7 @@ export const EmpresaView = () => {
                           <div className="flex items-center gap-2" style={{ textShadow: isExpandedEmpresa ? '0 0 10px rgba(255,255,255,0.3)' : 'none' }}>
                             <Building2 size={16} color={isExpandedEmpresa ? "var(--brandAlt)" : "var(--text-secondary)"} /> 
                             {e.razonSocial}
+                            {e.codigo && <span style={{ fontSize: '0.75rem', background: 'rgba(255,255,255,0.1)', padding: '2px 6px', borderRadius: '4px', fontWeight: 'normal', color: 'var(--brandAlt)' }}>{e.codigo}</span>}
                           </div>
                         </td>
                         <td className="text-muted">{e.rut}</td>

@@ -23,6 +23,7 @@ model User {
 model Empresa {
   id                String       @id @default(uuid())
   rut               String       @unique
+  codigo            String?
   razonSocial       String
   telefono          String?
   email             String?
