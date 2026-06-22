@@ -1,0 +1,30 @@
+import { Request, Response, NextFunction } from 'express';
+import jwt from 'jsonwebtoken';
+
+const JWT_SECRET = process.env.JWT_SECRET || 'cb-lunar-secret-key-super-secure';
+
+export interface AuthRequest extends Request {
+  user?: {
+    userId: string;
+  };
+}
+
+export const verifyToken = (req: AuthRequest, res: Response, next: NextFunction): void => {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    res.status(401).json({ error: 'Acceso denegado. Token no proporcionado.' });
+    return;
+  }
+
+  const token = authHeader.split(' ')[1];
+
+  try {
+    const verified = jwt.verify(token, JWT_SECRET) as any;
+    req.user = { userId: verified.userId || verified.id };
+    next();
+  } catch (error: any) {
+    console.error('JWT Error:', error.message);
+    res.status(401).json({ error: 'Token inválido o expirado' });
+  }
+};

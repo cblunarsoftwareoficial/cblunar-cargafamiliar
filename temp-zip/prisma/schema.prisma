@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-3.0.x", "rhel-openssl-1.0.x", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name             String
+  isVerified       Boolean  @default(false)
+  verificationCode String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  empresas         Empresa[]
+}
+
+model Empresa {
+  id                String       @id @default(uuid())
+  rut               String       @unique
+  codigo            String?
+  razonSocial       String
+  telefono          String?
+  email             String?
+  userId            String
+  user              User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+  trabajadores      Trabajador[]
+}
+
+model Trabajador {
+  id             String    @id @default(uuid())
+  rut            String    @unique
+  nombre         String
+  sueldoBase     Float
+  telefono       String?
+  cargo          String?
+  empresaId      String
+  empresa        Empresa   @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  cargas         Carga[]
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model Carga {
+  id               String     @id @default(uuid())
+  rutCausante      String     @unique
+  nombre           String
+  tipo             String     // "conyuge", "hijo"
+  fechaNacimiento  String
+  estudiando       Boolean    @default(false)
+  fechaInicio      String
+  numeroResolucion String
+  fechaResolucion  String
+  trabajadorId     String
+  trabajador       Trabajador @relation(fields: [trabajadorId], references: [id], onDelete: Cascade)
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+}
