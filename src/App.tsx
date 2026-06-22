@@ -177,33 +177,7 @@ function App() {
         </div>
 
         <div style={{ marginTop: 'auto', padding: '1.5rem' }}>
-          {/* Suscripción */}
-          <div style={{ marginBottom: '1rem', padding: '1rem', borderRadius: '1rem', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)' }}>
-            <p style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: '8px', fontWeight: 700 }}>Suscripción</p>
-            <div className="flex items-center justify-between mb-4">
-              <span style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.9)', fontWeight: 600 }}>Plan Profesional</span>
-              <span className="badge badge-info" style={{ fontSize: '0.6rem', padding: '0.1rem 0.4rem' }}>Activo</span>
-            </div>
-            <button 
-              onClick={async () => {
-                try {
-                  const res = await fetch('http://CBlunar-Carga-env.eba-z2c8rfbr.us-east-1.elasticbeanstalk.com/api/create-preference', { method: 'POST' });
-                  const data = await res.json();
-                  if (data.init_point) {
-                    window.open(data.init_point, '_blank');
-                  }
-                } catch (e) {
-                  alert('Error conectando con el servidor de pagos.');
-                }
-              }}
-              style={{ width: '100%', padding: '0.5rem', borderRadius: '0.5rem', background: 'rgba(14, 165, 233, 0.15)', color: '#0ea5e9', border: '1px solid rgba(14, 165, 233, 0.3)', fontSize: '0.75rem', fontWeight: 'bold', cursor: 'pointer', transition: 'all 0.2s', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-              onMouseOver={(e) => { e.currentTarget.style.background = 'rgba(14, 165, 233, 0.25)'; }}
-              onMouseOut={(e) => { e.currentTarget.style.background = 'rgba(14, 165, 233, 0.15)'; }}
-            >
-              Renovar Suscripción
-            </button>
-          </div>
-            
+
           {/* Widget de Cuenta */}
           <div style={{ marginTop: 'auto' }}>
             <div style={{ 
