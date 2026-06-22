@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { User, Lock, Shield, CreditCard, ExternalLink } from 'lucide-react';
+import { User, Lock, Shield } from 'lucide-react';
 
 export const AccountView = ({ userEmail }: { userEmail: string }) => {
   const [activeTab, setActiveTab] = useState('profile');
@@ -7,7 +7,6 @@ export const AccountView = ({ userEmail }: { userEmail: string }) => {
 
   const tabs = [
     { id: 'profile', label: 'Mi Perfil', icon: User },
-    { id: 'subscription', label: 'Suscripción', icon: CreditCard },
     { id: 'password', label: 'Contraseña', icon: Lock },
     { id: '2fa', label: 'Autenticación de 2 pasos', icon: Shield }
   ];
@@ -102,50 +101,6 @@ export const AccountView = ({ userEmail }: { userEmail: string }) => {
               }}>
                 Guardar Cambios
               </button>
-            </div>
-          )}
-
-          {activeTab === 'subscription' && (
-            <div className="glass-panel" style={{ padding: '2rem', borderRadius: '16px', background: 'rgba(255,255,255,0.02)' }}>
-              <h2 style={{ fontSize: '1.5rem', fontWeight: 600, color: 'white', marginBottom: '2rem' }}>Suscripción y Facturación</h2>
-              
-              <div style={{ marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '1rem', background: 'rgba(112,0,255,0.1)', padding: '1.5rem', borderRadius: '12px', border: '1px solid rgba(112,0,255,0.2)' }}>
-                <div style={{ background: 'var(--brandMain)', padding: '12px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <CreditCard size={28} color="white" />
-                </div>
-                <div>
-                  <h3 style={{ fontSize: '1.1rem', fontWeight: 600, color: 'white', marginBottom: '0.25rem' }}>Licencia Profesional (Anual)</h3>
-                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>Acceso ilimitado a la gestión de empresas, trabajadores y cargas familiares en la nube.</p>
-                </div>
-              </div>
-
-              <div style={{ marginBottom: '2.5rem', background: 'rgba(255,255,255,0.03)', padding: '1.5rem', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                <h4 style={{ color: 'white', fontWeight: 600, marginBottom: '0.5rem' }}>Renovación del Software</h4>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '1.5rem', lineHeight: 1.5 }}>
-                  Asegura el funcionamiento continuo de tu sistema de gestión. Al renovar tu suscripción, mantienes el acceso a tus datos en la nube y recibes todas las futuras actualizaciones y soporte técnico.
-                </p>
-                <button 
-                  onClick={() => window.open('https://link.mercadopago.cl/', '_blank')}
-                  className="btn btn-primary" 
-                  style={{
-                    background: 'linear-gradient(135deg, var(--brandAlt) 0%, var(--brandMain) 100%)',
-                    color: 'white',
-                    border: 'none',
-                    padding: '0.85rem 2rem',
-                    borderRadius: '10px',
-                    fontSize: '1rem',
-                    cursor: 'pointer',
-                    fontWeight: 600,
-                    boxShadow: '0 8px 25px rgba(112,0,255,0.4)',
-                    transition: 'all 0.3s ease',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem'
-                  }}
-                >
-                  <ExternalLink size={18} /> Pagar Renovación (MercadoPago)
-                </button>
-              </div>
             </div>
           )}
 
